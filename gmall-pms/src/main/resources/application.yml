@@ -12,6 +12,16 @@ spring:
     password: yuanxin
   redis:
     host: 192.168.106.128
+  rabbitmq:
+    host: 192.168.106.128
+    virtual-host: /yuanxin
+    username: yuanxin
+    password: yuanxin
+
+item:
+  rabbitmq:
+    exchange: GMALL-PMS-EXCHANGE
+
 mybatis-plus:
   mapper-locations: classpath:mapper/pms/*.xml
   global-config:

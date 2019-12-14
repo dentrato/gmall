@@ -1,0 +1,17 @@
+server:
+  port: 8086
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  elasticsearch:
+    rest:
+      uris: http://192.168.106.128:9200
+
+  rabbitmq:
+    host: 192.168.106.128
+    port: 5672
+    virtual-host: /yuanxin
+    username: yuanxin
+    password: yuanxin

@@ -1,12 +1,15 @@
 package com.atguigu.gmall.pms.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
 import com.atguigu.core.bean.PageVo;
 import com.atguigu.core.bean.QueryCondition;
 import com.atguigu.core.bean.Resp;
+import com.atguigu.gmall.pms.vo.CategoryEntityVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,27 @@ import com.atguigu.gmall.pms.service.CategoryService;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
+
+    @GetMapping("{pid}")
+    public Resp<List<CategoryEntityVo>> querySubCategory(@PathVariable("pid")Long pid){
+        List<CategoryEntityVo> categoryEntityVos= this.categoryService.querySubCategory(pid);
+        return Resp.ok(categoryEntityVos);
+    }
+
+    @RequestMapping
+    public Resp<List<CategoryEntity>> queryCategoryBypidOrLevel(@RequestParam(value = "level",defaultValue = "0")Integer level,@RequestParam(value = "parentCid",required = false)Long pid){
+
+        QueryWrapper<CategoryEntity> wrapper = new QueryWrapper<CategoryEntity>();
+        if (level != 0) {
+            wrapper.eq("cat_level",level);
+        }
+        if (pid != null) {
+            wrapper.eq("parent_cid",pid);
+        }
+        List<CategoryEntity> list = categoryService.list(wrapper);
+
+        return Resp.ok(list);
+    }
 
     /**
      * 列表
